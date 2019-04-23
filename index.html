@@ -10,13 +10,13 @@
 
 <body>
   <div id="app">
-    <hello-world heading="Likes"></hello-world>
-    <hello-world heading="Dislikes"></hello-world>
+    <hello-world heading="Likes" color="green"></hello-world>
+    <hello-world heading="Dislikes" color="red"></hello-world>
   </div>
   <template id="set-counter">
     <div><!-- template 底下只能有一個 root div-->
         <h1>{{ heading }}</h1>
-        <button @click="add">Submit {{ count }}</button>
+        <button @click="add" v-bind:style="{background: color}">{{ count }}</button>
     </div>
   </template>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -24,7 +24,7 @@
     Vue.component('hello-world', {
       template: '#set-counter',
       // 吃自己組建內的data跟事件，不受外層影響
-      props: ['heading'],
+      props: ['heading', 'color'],
       data: function () {
         return {
           count: 0
