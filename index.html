@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue 練習</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <input type="text" v-model="message">
+
+    <div>
+      <p v-show="!message">Error</p>
+      <textarea name="" id="" cols="30" rows="10" v-model="message"></textarea><br>
+      <button v-if="message" v-on:click="checkSomething">Submit {{ count }}</button>
+    </div>
+    <p>{{ $data | json }}</p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: '',
+        count: 0
+      },
+      methods: {
+        checkSomething: function () {
+          this.count += 1
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
