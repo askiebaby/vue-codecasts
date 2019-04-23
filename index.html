@@ -10,17 +10,21 @@
 
 <body>
   <div id="app">
-    <hello-world></hello-world>
-    <hello-world></hello-world>
+    <hello-world heading="Likes"></hello-world>
+    <hello-world heading="Dislikes"></hello-world>
   </div>
   <template id="set-counter">
-      <button @click="add">{{ count }}</button>
+    <div><!-- template 底下只能有一個 root div-->
+        <h1>{{ heading }}</h1>
+        <button @click="add">Submit {{ count }}</button>
+    </div>
   </template>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
     Vue.component('hello-world', {
       template: '#set-counter',
       // 吃自己組建內的data跟事件，不受外層影響
+      props: ['heading'],
       data: function () {
         return {
           count: 0
