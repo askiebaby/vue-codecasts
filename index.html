@@ -10,13 +10,28 @@
 
 <body>
   <div id="app">
+    <h1>Vue.component練習</h1>
     <hello-world heading="Likes" color="green"></hello-world>
     <hello-world heading="Dislikes" color="red"></hello-world>
+    <hr>
+    <h1>computed 練習</h1>
+    <name-filter text-style="uppercase"></name-filter>
   </div>
   <template id="set-counter">
     <div><!-- template 底下只能有一個 root div-->
-        <h1>{{ heading }}</h1>
+        <h3>{{ heading }}</h3>
         <button @click="add" v-bind:style="{background: color}">{{ count }}</button>
+    </div>
+  </template>
+  <template id="names-for-computed">
+    <div>
+      <input type="text" placeholder="輸入名字" v-model="findName">
+      <ul>
+        <li v-for="name in nameFilter" v-bind:style="{textTransform: textStyle}">
+          <span>{{ name }}</span>
+        </li>
+      </ul>
+      {{$data}}
     </div>
   </template>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -33,6 +48,23 @@
       methods: {
         add: function () {
           this.count += 1
+        }
+      }
+    })
+    Vue.component('name-filter', {
+      template: '#names-for-computed',
+      props: ['textStyle'], // props 在 html 中要記得不是小駝峰的寫法
+      data: function () {
+        return {
+          findName: '',
+          names: ['Askie', 'Henry', 'Chris', 'Tony', 'Kira', 'Tako', 'Jimmy', 'Lai', 'Mango', 'Jason', '日安', '鵬化', 'Letter']
+        }
+      },
+      computed: {
+        nameFilter () {
+          // 依賴於 findName 的變動，而去處理資料後（比對規則=>濾出符合項目）再 return
+          let filter = new RegExp(this.findName, 'i')
+          return this.names.filter(el => el.match(filter))
         }
       }
     })
