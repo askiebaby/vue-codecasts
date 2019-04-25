@@ -17,9 +17,11 @@
 </head>
 <body>
   <div id="app">
+    <p>{{ $data }}</p>
     <ul>
       <li :class="[{'completed': task.completed}, {'color-red': !task.completed}]"
-          v-for="task in tasks">{{ task.body }}</li>
+          v-for="task in tasks"
+          @click="toggleTask(task)">{{ task.body }}</li>
     </ul>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -33,6 +35,11 @@
         {body: '減醣', completed: true},
         {body: '曬太陽', completed: false}
       ]
+    },
+    methods: {
+      toggleTask: function (item) {
+        item.completed = !item.completed
+      }
     }
   })
   </script>
