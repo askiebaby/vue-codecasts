@@ -10,7 +10,7 @@
 
 <body>
   <div id="app">
-    <h1 @click="consoleTest">Vue.component練習</h1>
+    <h1>Vue.component練習</h1>
     Author: {{nameReverse}}
     <hello-world heading="Likes" color="green"></hello-world>
     <hello-world heading="Dislikes" color="red"></hello-world>
@@ -89,9 +89,6 @@
       methods: {
         add: function () {
           this.count += 1
-        },
-        consoleTest () {
-          // this.nameReverse(nameReverse)
         }
       },
       computed: {
