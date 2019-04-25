@@ -14,7 +14,7 @@
 <body>
   <div id="app">
     <ul>
-      <li :class="task.completed ? 'completed' : ''"
+      <li :class="['completed', 'truly', someThing ? 'something' : '']"
           v-for="task in tasks">{{ task.body }}</li>
     </ul>
   </div>
@@ -23,6 +23,8 @@
   var app = new Vue({
     el: '#app',
     data: {
+      completed: 'something',
+      someThing: true,
       tasks: [
         {body: '跑步', completed: false},
         {body: '喝水', completed: false},
