@@ -18,14 +18,27 @@
 <body>
   <div id="app">
     <p>{{ $data }}</p>
+    <task-app></task-app>
+  </div>
+  <template id="task">
     <ul>
       <li :class="[{'completed': task.completed}, {'color-red': !task.completed}]"
           v-for="task in tasks"
           @click="toggleTask(task)">{{ task.body }}</li>
     </ul>
-  </div>
+  </template>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+  
+  Vue.component('task-app', {
+      template: '#task',
+      data: function () {
+        return {
+
+        }
+      }
+  })
+
   var app = new Vue({
     el: '#app',
     data: {
