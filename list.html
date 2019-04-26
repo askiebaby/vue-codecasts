@@ -18,12 +18,13 @@
 <body>
   <div id="app">
     <p>{{ $data }}</p>
-    <task-app></task-app>
+    <task-app :list="tasks"></task-app><!-- 1. 父層在子層 bind 自定義的屬性 list 及資料 task -->
   </div>
   <template id="task">
     <ul>
+      <!-- 3. task in tasks 改成 task in list 承接 父層 pass 的 props -->
       <li :class="[{'completed': task.completed}, {'color-red': !task.completed}]"
-          v-for="task in tasks"
+          v-for="task in list" 
           @click="toggleTask(task)">{{ task.body }}</li>
     </ul>
   </template>
@@ -32,11 +33,17 @@
   
   Vue.component('task-app', {
       template: '#task',
+      props: ['list'], // 2. 在子層註冊 props 名稱 list
       data: function () {
         return {
 
         }
+      },
+      methods: { // 4. 把用到的 methods 搬進來 獨立的 component 中
+      toggleTask: function (item) {
+        item.completed = !item.completed
       }
+    }
   })
 
   var app = new Vue({
@@ -48,11 +55,6 @@
         {body: '減醣', completed: true},
         {body: '曬太陽', completed: false}
       ]
-    },
-    methods: {
-      toggleTask: function (item) {
-        item.completed = !item.completed
-      }
     }
   })
   </script>
