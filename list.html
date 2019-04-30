@@ -21,12 +21,21 @@
     <task-app :list="tasks"></task-app><!-- 1. 父層在子層 bind 自定義的屬性 list 及資料 task -->
   </div>
   <template id="task">
-    <ul>
-      <!-- 3. task in tasks 改成 task in list 承接 父層 pass 的 props -->
-      <li :class="[{'completed': task.completed}, {'color-red': !task.completed}]"
-          v-for="task in list" 
-          @click="toggleTask(task)">{{ task.body }}</li>
-    </ul>
+    <div>
+      <h1>Askie's Task</h1>
+      <h3 v-show="remaining">未完成的項目：{{ remaining }}</h3>
+      <input type="text" v-on:keyup.enter="addTask($event)">
+      <ul>
+        <!-- 3. task in tasks 改成 task in list 承接 父層 pass 的 props -->
+        <li
+          :class="[{'completed': task.completed}, {'color-red': !task.completed}]"
+          v-for="(task, index) in list" 
+        >
+          <span @click="toggleTask(task)">{{ task.body }}</span>
+          <strong @click="deleteTask(index)">X</strong>
+        </li>
+      </ul>
+    </string>
   </template>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -40,9 +49,26 @@
         }
       },
       methods: { // 4. 把用到的 methods 搬進來 獨立的 component 中
-      toggleTask: function (item) {
-        item.completed = !item.completed
-      }
+        addTask (event) {
+          let value = event.target.value
+          let obj = {body: event.target.value, completed: false}
+          this.list.unshift(obj)
+          console.log(obj)
+        },
+        toggleTask (item) {
+          item.completed = !item.completed
+        },
+        deleteTask (index) {
+          this.list.splice(index, 1) 
+        }
+      },
+      computed: {
+        remaining () {
+          return this.list.filter(function(task){
+            return !task.completed
+          }).length
+        }
+      
     }
   })
 
